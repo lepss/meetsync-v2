@@ -6,9 +6,11 @@ const prisma = new PrismaClient();
 const main = async () => {
   const users = [];
   for (let i = 0; i < 50; i++) {
+    const name = faker.person.fullName();
     const user = {
-      firstname: faker.person.firstName(),
-      lastname: faker.person.lastName(),
+      name: name,
+      firstname: name.split(" ")[0],
+      lastname: name.split(" ")[1],
       email: faker.internet.email(),
       image: faker.image.avatar(),
       username: faker.internet.userName(),

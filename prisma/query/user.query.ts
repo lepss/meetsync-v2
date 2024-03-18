@@ -68,9 +68,7 @@ export const getUserEdit = async () => {
   });
 };
 
-export const getUserNumber = async () => {
-  prisma.user.count();
-};
+export const getUserNumber = async () => prisma.user.count();
 
 export type UserProfile = NonNullable<
   Prisma.PromiseReturnType<typeof getUserProfile>

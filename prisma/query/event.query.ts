@@ -42,27 +42,24 @@ export const eventQuery = () =>
     },
   } satisfies Prisma.EventSelect);
 
-export const getLatestEvents = async () => {
+export const getLatestEvents = () =>
   prisma.event.findMany({
     select: eventQuery(),
     orderBy: { created_at: "desc" },
     take: 10,
   });
-};
 
-export const getEvent = async (id: string) => {
+export const getEvent = async (id: string) =>
   prisma.event.findUnique({
     where: { id },
     select: eventQuery(),
   });
-};
 
-export const getAllEvents = async () => {
+export const getAllEvents = async () =>
   prisma.event.findMany({
     select: eventQuery(),
   });
-};
 
-export const getEventNumber = async () => {
-  prisma.event.count();
-};
+export const getEventNumber = async () => prisma.event.count();
+
+export type Event = Prisma.PromiseReturnType<typeof getLatestEvents>[number];
