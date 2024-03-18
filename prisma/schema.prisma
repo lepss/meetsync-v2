@@ -46,17 +46,90 @@ model VerificationToken {
 
 // Application
 model User {
-  id            String    @id @default(cuid())
-  fisrtname     String?
-  lastname      String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  username      String @default("default")
-  bio           String?
-  link          String?
-  createdAt     DateTime @default(now())
+  id                      String    @id @default(cuid())
+  firstname               String?
+  lastname                String?
+  email                   String?   @unique
+  emailVerified           DateTime?
+  image                   String?
+  username                String @default("default")
+  bio                     String?
+  link                    String?
+  createdAt               DateTime @default(now())
 
-  accounts      Account[]
-  sessions      Session[]
+  accounts                Account[]
+  sessions                Session[]
+  events                  Event[]
+  company                 Company[]
+  appointmentSessions     AppointmentSession[]
+  appointmentRequests     AppointmentRequest[]
+}
+
+model Company {
+  id          String    @id @default(cuid())
+  name        String
+  country     String
+  city        String
+  website     String?
+  userId      String
+  user        User   @relation(fields: [userId], references: [id])
+}
+
+model Event {
+  id                    String    @id @default(cuid())
+  name                  String
+  description           String?
+  location              String
+  appointment_duration  Int
+  break_duration        Int
+  created_at            DateTime @default(now())
+  image                 String?
+  userId                String
+  user                  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  eventDays             EventDay[]
+  appointmentSessions   AppointmentSession[]
+}
+
+model EventDay {
+  id                String    @id @default(cuid())
+  start_time        DateTime
+  end_time          DateTime
+  lunch_start_time  DateTime?
+  lunch_end_time    DateTime?
+  eventId           String
+  event             Event  @relation(fields: [eventId], references: [id])
+}
+
+model AppointmentSession {
+  id                    String       @id @default(cuid())
+  description           String?
+  created_at            DateTime  @default(now())
+  eventId               String
+  userId                String
+  event                 Event     @relation(fields: [eventId], references: [id])
+  user                  User      @relation(fields: [userId], references: [id])
+  appointmentRequests   AppointmentRequest[]
+  appointment           Appointment[]
+}
+
+model AppointmentRequest {
+  id                   String    @id @default(cuid())
+  request              String
+  created_at           DateTime @default(now())
+  accepted_status      Boolean  @default(false)
+  userId               String
+  appointmentSessionId String
+  user                 User @relation(fields: [userId], references: [id])
+  appointmentSession   AppointmentSession @relation(fields: [appointmentSessionId], references: [id])
+  appointment          Appointment[]
+}
+
+model Appointment {
+  id                    String    @id @default(cuid())
+  date_start            DateTime
+  date_end              DateTime
+  appointmentRequestId  String
+  appointmentSessionId  String
+  appointmentRequest    AppointmentRequest @relation(fields: [appointmentRequestId], references: [id])
+  appointmentSession    AppointmentSession @relation(fields: [appointmentSessionId], references: [id])
 }
