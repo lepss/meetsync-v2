@@ -1,54 +1,49 @@
+import { formatDate } from "@/lib/date";
 import { Event } from "@/prisma/query/event.query";
 import Image from "next/image";
+import Link from "next/link";
+import { Button } from "../ui/button";
 
 type EventCardProps = { event: Event };
 
 export const EventCard = ({ event }: EventCardProps) => {
   return (
-    <div className="rounded-lg overflow-hidden w-96">
-      <div className="h-48 bg-cover bg-center">
+    <Link
+      href={`/event/${event.id}`}
+      className="rounded-lg overflow-hidden w-96 hover:bg-muted"
+    >
+      <div className="h-48 bg-cover bg-center relative">
         {event.image ? (
           <Image
             src={event.image}
             alt="event image"
-            layout="fill"
-            objectFit="cover"
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            style={{
+              objectFit: "cover",
+            }}
           />
         ) : null}
       </div>
-      <div className="p-4">
-        <p className=""></p>
+      <div className="py-4 px-1">
+        <p className="text-sm uppercase">
+          {formatDate(event.eventDays[0].start_time, "short", "en-US")}
+        </p>
+        <Button variant="link" className="p-0">
+          <h2 className="text-xl font-bold uppercase mt-1 truncate whitespace-nowrap overflow-hidden">
+            {event.name}
+          </h2>
+        </Button>
+        <p className="mt-1 font-bold text-muted-foreground">{event.location}</p>
+        <p className="text-sm mt-1 text-muted-foreground">
+          {event._count.appointmentSessions} people to meet
+        </p>
       </div>
-    </div>
-
-    // <Link href={`/event/${event.id}`}>
-    //   <Card className="w-full p-4 mt-4">
-    //     <CardHeader>
-    //       <CardTitle>{event.name}</CardTitle>
-    //       <CardDescription className="flex items-center gap-2 py-1">
-    //         <Avatar>
-    //           {event.user.image ? (
-    //             <AvatarImage src={event.user.image} alt={event.user.username} />
-    //           ) : null}
-    //           <AvatarFallback>
-    //             {event.user.username.slice(0, 2).toUpperCase()}
-    //           </AvatarFallback>
-    //         </Avatar>
-    //         {event.user.username}
-    //       </CardDescription>
-    //     </CardHeader>
-    //     <CardContent>
-    //       <p>{event.description}</p>
-    //     </CardContent>
-    //     <CardFooter className="gap-1">
-    //       <MapPin size={16} />
-    //       <p>{event.location}</p>
-    //       <CalendarDays size={16} className="ml-4" />
-    //       <p>{event.eventDays[0].start_time.toDateString()}</p>
-    //       <Handshake size={16} className="ml-4" />
-    //       <p>{event._count.appointmentSessions} Peoples to meet</p>
-    //     </CardFooter>
-    //   </Card>
-    // </Link>
+      <div className="pb-1 px-1">
+        <Button className="py-2 px-4 w-full" variant="default">
+          Join
+        </Button>
+      </div>
+    </Link>
   );
 };
