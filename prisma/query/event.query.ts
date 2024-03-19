@@ -1,6 +1,35 @@
 import prisma from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
 
+export const eventCardQuery = () =>
+  ({
+    id: true,
+    name: true,
+    description: true,
+    location: true,
+    created_at: true,
+    image: true,
+    user: {
+      select: {
+        image: true,
+        username: true,
+        id: true,
+      },
+    },
+    eventDays: {
+      select: {
+        id: true,
+        start_time: true,
+        end_time: true,
+      },
+    },
+    _count: {
+      select: {
+        appointmentSessions: true,
+      },
+    },
+  } satisfies Prisma.EventSelect);
+
 export const eventQuery = () =>
   ({
     id: true,
@@ -44,7 +73,7 @@ export const eventQuery = () =>
 
 export const getLatestEvents = () =>
   prisma.event.findMany({
-    select: eventQuery(),
+    select: eventCardQuery(),
     orderBy: { created_at: "desc" },
     take: 10,
   });
@@ -57,7 +86,7 @@ export const getEvent = async (id: string) =>
 
 export const getAllEvents = async () =>
   prisma.event.findMany({
-    select: eventQuery(),
+    select: eventCardQuery(),
   });
 
 export const getEventNumber = async () => prisma.event.count();
