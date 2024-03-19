@@ -1,10 +1,10 @@
 import { formatDate } from "@/lib/date";
-import { Event } from "@/prisma/query/event.query";
+import { EventCardType } from "@/prisma/query/event.query";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../ui/button";
 
-type EventCardProps = { event: Event };
+type EventCardProps = { event: EventCardType };
 
 export const EventCard = ({ event }: EventCardProps) => {
   return (

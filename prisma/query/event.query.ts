@@ -71,14 +71,14 @@ export const eventQuery = () =>
     },
   } satisfies Prisma.EventSelect);
 
-export const getLatestEvents = () =>
+export const getLatestEvents = async () =>
   prisma.event.findMany({
     select: eventCardQuery(),
     orderBy: { created_at: "desc" },
     take: 10,
   });
 
-export const getEvent = async (id: string) =>
+export const getEventById = async (id: string) =>
   prisma.event.findUnique({
     where: { id },
     select: eventQuery(),
@@ -91,4 +91,8 @@ export const getAllEvents = async () =>
 
 export const getEventNumber = async () => prisma.event.count();
 
-export type Event = Prisma.PromiseReturnType<typeof getLatestEvents>[number];
+export type EventCardType = Prisma.PromiseReturnType<
+  typeof getLatestEvents
+>[number];
+
+export type EventType = Prisma.PromiseReturnType<typeof getEventById>;
