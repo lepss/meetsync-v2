@@ -20,17 +20,36 @@ const main = async () => {
 
     const dbUser = await prisma.user.create({ data: user });
     users.push(dbUser);
+
+    const companies = [];
+    const company = {
+      name: faker.company.name(),
+      description: faker.company.buzzPhrase(),
+      country: faker.location.country(),
+      city: faker.location.city(),
+      website: faker.internet.url(),
+      userId: dbUser.id,
+    } satisfies Prisma.CompanyUncheckedCreateInput;
+    const dbCompany = await prisma.company.create({ data: company });
+    companies.push(company);
   }
 
   const events = [];
   for (let i = 0; i < 20; i++) {
+    const name = faker.company.name();
+    const durations = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60];
     const event = {
-      name: faker.lorem.words(),
-      description: faker.lorem.sentence(),
+      name: name + " Event",
+      description:
+        name +
+        " present this event for " +
+        faker.lorem.paragraphs({ min: 1, max: 3 }),
       location: faker.location.city(),
       image: faker.image.url(),
-      appointment_duration: faker.number.int({ min: 15, max: 60 }),
-      break_duration: faker.number.int({ min: 5, max: 30 }),
+      appointment_duration: faker.helpers.arrayElement(durations),
+      break_duration: faker.helpers.arrayElement(
+        durations.filter((duration) => duration <= 30)
+      ),
       userId: users[Math.floor(Math.random() * users.length)].id,
     } satisfies Prisma.EventUncheckedCreateInput;
 
@@ -39,8 +58,8 @@ const main = async () => {
 
     const eventDates = [];
     const randomDateNumber = faker.number.int({ min: 1, max: 3 });
+    const baseDate = faker.date.future();
     for (let i = 0; i < randomDateNumber; i++) {
-      const baseDate = faker.date.future();
       const eventDate = {
         start_time: new Date(baseDate.setHours(8, 0, 0, 0)),
         end_time: new Date(baseDate.setHours(18, 0, 0, 0)),

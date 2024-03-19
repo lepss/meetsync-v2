@@ -29,11 +29,9 @@ export const EventCard = ({ event }: EventCardProps) => {
         <p className="text-sm uppercase">
           {formatDate(event.eventDays[0].start_time, "short", "en-US")}
         </p>
-        <Button variant="link" className="p-0">
-          <h2 className="text-xl font-bold uppercase mt-1 truncate whitespace-nowrap overflow-hidden">
-            {event.name}
-          </h2>
-        </Button>
+        <h2 className="text-xl font-bold uppercase mt-1 truncate whitespace-nowrap overflow-hidden">
+          {event.name}
+        </h2>
         <p className="mt-1 font-bold text-muted-foreground">{event.location}</p>
         <p className="text-sm mt-1 text-muted-foreground">
           {event._count.appointmentSessions} people to meet
