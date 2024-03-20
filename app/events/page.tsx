@@ -7,12 +7,12 @@ export default async function Events() {
   const events = await getAllEvents();
 
   return (
-    <main>
+    <div>
       <div className="mt-4 flex flex-wrap justify-center gap-2">
         {events.map((event) => (
           <EventCard key={event.id} event={event} />
         ))}
       </div>
-    </main>
+    </div>
   );
 }

@@ -89,7 +89,7 @@ export const getAllEvents = async () =>
     select: eventCardQuery(),
   });
 
-export const getEventNumber = async () => prisma.event.count();
+export const getEventCount = async () => prisma.event.count();
 
 export type EventCardType = Prisma.PromiseReturnType<
   typeof getLatestEvents

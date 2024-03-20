@@ -7,15 +7,19 @@ const main = async () => {
   const users = [];
   for (let i = 0; i < 50; i++) {
     const name = faker.person.fullName();
+    const firstname = name.split(" ")[0];
+    const lastname = name.split(" ")[1];
+    const randomNumber = faker.number.int({ min: 1, max: 100 });
+    const username = `${firstname[0]}${lastname}${randomNumber}`;
     const user = {
       name: name,
-      firstname: name.split(" ")[0],
-      lastname: name.split(" ")[1],
-      email: faker.internet.email(),
+      firstname: firstname,
+      lastname: lastname,
+      email: `${firstname[0].toLowerCase()}.${lastname.toLowerCase()}@gmail.com`,
       image: faker.image.avatar(),
-      username: faker.internet.userName(),
+      username: username.toLowerCase(),
       bio: faker.lorem.sentence(),
-      link: faker.internet.url(),
+      link: `${firstname.toLowerCase()}-${lastname.toLowerCase()}.com`,
     } satisfies Prisma.UserCreateInput;
 
     const dbUser = await prisma.user.create({ data: user });
@@ -36,12 +40,12 @@ const main = async () => {
 
   const events = [];
   for (let i = 0; i < 20; i++) {
-    const name = faker.company.name();
+    const eventName = faker.company.name();
     const durations = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60];
     const event = {
-      name: name + " Event",
+      name: eventName + " Event",
       description:
-        name +
+        eventName +
         " present this event for " +
         faker.lorem.paragraphs({ min: 1, max: 3 }),
       location: faker.location.city(),
@@ -76,8 +80,14 @@ const main = async () => {
     const randomSessionNumber = faker.number.int({ min: 2, max: 30 });
     for (let i = 0; i < randomSessionNumber; i++) {
       const sessionUser = users[Math.floor(Math.random() * users.length)];
+      const sessionName = faker.company.name();
       const appointmentSession = {
-        description: faker.lorem.sentence(),
+        name: sessionName + " Session",
+        description:
+          sessionName +
+          ` organize this session in ${eventName} event for ` +
+          faker.lorem.paragraphs({ min: 1, max: 3 }),
+        image: faker.image.url(),
         userId: sessionUser.id,
         eventId: dbEvent.id,
       } satisfies Prisma.AppointmentSessionUncheckedCreateInput;

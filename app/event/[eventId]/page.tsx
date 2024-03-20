@@ -21,6 +21,7 @@ export default async function EventPage({
         date={event.eventDays[0].start_time}
         location={event.location}
         name={event.name}
+        id={event.id}
       />
       <EventContent className="" event={event} />
     </div>

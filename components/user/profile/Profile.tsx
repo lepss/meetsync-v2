@@ -2,7 +2,7 @@ import { removeHttp } from "@/lib/removeHttp";
 import { UserProfile } from "@/prisma/query/user.query";
 import Link from "next/link";
 import { PropsWithChildren } from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../../ui/avatar";
 
 export const Profile = ({
   user,

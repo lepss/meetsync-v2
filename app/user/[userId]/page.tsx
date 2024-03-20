@@ -1,4 +1,4 @@
-import { Profile } from "@/components/user/Profile";
+import { Profile } from "@/components/user/profile/Profile";
 import { getAuthSession } from "@/lib/auth";
 import { getUserProfile } from "@/prisma/query/user.query";
 import { Metadata } from "next";
@@ -32,7 +32,7 @@ export default async function UserPage({ params }: PageParams) {
 
   const isCurrentUser = params.userId === session?.user?.id;
   if (isCurrentUser) {
-    redirect("/profil");
+    redirect("/profile");
   }
 
   return (

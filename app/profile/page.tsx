@@ -1,5 +1,5 @@
 import { buttonVariants } from "@/components/ui/button";
-import { Profile } from "@/components/user/Profile";
+import { Profile } from "@/components/user/profile/Profile";
 import { getAuthSession } from "@/lib/auth";
 import { getUserProfile } from "@/prisma/query/user.query";
 import Link from "next/link";
@@ -23,7 +23,7 @@ export default async function ProfilePage() {
         <form className="mt-4">
           <Link
             className={buttonVariants({ variant: "outline" })}
-            href="/profil/edit"
+            href="/profile/edit"
           >
             Edit profile
           </Link>
