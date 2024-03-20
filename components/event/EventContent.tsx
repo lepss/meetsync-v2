@@ -46,7 +46,7 @@ export const EventContent = ({
     <Card className={cn("mt-4", className)}>
       <CardHeader>
         <CardTitle>About</CardTitle>
-        <CardDescription className="text-md">
+        <CardDescription className="text-base">
           {event?.description}
         </CardDescription>
       </CardHeader>
@@ -61,10 +61,7 @@ export const EventContent = ({
           <User2 />
           <p className="ml-2">
             Event organize by{" "}
-            <Link
-              href={`/profile/${event?.user.id}`}
-              className="hover:underline"
-            >
+            <Link href={`/user/${event?.user.id}`} className="hover:underline">
               {event?.user.username}
             </Link>
           </p>
@@ -107,7 +104,7 @@ export const EventContent = ({
         </div>
       </CardContent>
       <CardFooter>
-        <p className="text-muted-foreground text-sm text-right w-full">
+        <p className="w-full text-right text-sm text-muted-foreground">
           Created at {event?.created_at.toLocaleDateString("en-US")}
         </p>
       </CardFooter>

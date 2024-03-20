@@ -15,7 +15,7 @@ export default async function EventPage({
   }
 
   return (
-    <div className="gap-2 mt-4 max-w-screen-xl">
+    <div className="mt-4 max-w-screen-xl gap-2">
       <EventHeader
         image={event.image}
         date={event.eventDays[0].start_time}

@@ -12,13 +12,19 @@ export const metadata: Metadata = {
   description: "Synchronize your meetings",
 };
 
-export default function RootLayout({
+export function generateStaticParams() {
+  return [{ locale: "en" }, { locale: "fr" }];
+}
+
+export default async function RootLayout({
   children,
+  params: { locale },
 }: Readonly<{
   children: React.ReactNode;
+  params: { locale: string };
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <body
         className={clsx(inter.className, "bg-background h-full")}
         suppressHydrationWarning

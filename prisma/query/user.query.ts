@@ -5,6 +5,7 @@ import { cache } from "react";
 
 const userQuery = {
   id: true,
+  name: true,
   firstname: true,
   lastname: true,
   image: true,
