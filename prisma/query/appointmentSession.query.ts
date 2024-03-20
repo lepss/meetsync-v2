@@ -49,6 +49,8 @@ export const appointmentSessionQuery = () =>
       select: {
         name: true,
         location: true,
+        appointment_duration: true,
+        break_duration: true,
         id: true,
         eventDays: {
           select: {
@@ -108,6 +110,9 @@ export const getAllAppointmentSessionsByEventId = async (eventId: string) =>
   prisma.appointmentSession.findMany({
     where: { eventId },
     select: appointmentSessionCardQuery(),
+    orderBy: {
+      created_at: "desc",
+    },
   });
 
 export const getAppointmentSessionById = async (id: string) =>

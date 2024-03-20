@@ -44,11 +44,11 @@ export const EventHeader = ({
         <div className="flex gap-2">
           <Link
             className="w-full"
-            href={`/event/${id}/appointmentSessions/add`}
+            href={`/events/${id}/appointmentSessions/add`}
           >
             <Button className="mt-4 w-full px-4 py-2">Create a session</Button>
           </Link>
-          <Link className="w-full" href={`/event/${id}/appointmentSessions`}>
+          <Link className="w-full" href={`/events/${id}/appointmentSessions`}>
             <Button className="mt-4 w-full px-4 py-2">Join a session</Button>
           </Link>
         </div>

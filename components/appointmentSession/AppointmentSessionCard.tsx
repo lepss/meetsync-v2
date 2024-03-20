@@ -12,7 +12,7 @@ export const AppointmentSessionCard = ({
 }: AppointmentSessionCardProps) => {
   return (
     <Link
-      href={`/appoinmentSession/${appointmentSession.id}`}
+      href={`appointmentSessions/${appointmentSession.id}`}
       className="w-96 overflow-hidden rounded-lg hover:bg-muted"
     >
       <div className="relative h-48 bg-cover bg-center">

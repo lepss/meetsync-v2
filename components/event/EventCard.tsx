@@ -9,7 +9,7 @@ type EventCardProps = { event: EventCardType };
 export const EventCard = ({ event }: EventCardProps) => {
   return (
     <Link
-      href={`/event/${event.id}`}
+      href={`/events/${event.id}`}
       className="w-96 overflow-hidden rounded-lg hover:bg-muted"
     >
       <div className="relative h-48 bg-cover bg-center">
