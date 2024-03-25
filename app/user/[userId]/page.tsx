@@ -1,6 +1,6 @@
 import { Profile } from "@/components/user/profile/Profile";
 import { getAuthSession } from "@/lib/auth";
-import { getUserProfile } from "@/prisma/query/user.query";
+import { getUserProfile } from "@/lib/queries/user.query";
 import { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 

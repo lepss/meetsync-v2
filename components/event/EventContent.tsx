@@ -15,9 +15,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { formatDate } from "@/lib/date";
-import { cn } from "@/lib/utils";
-import { EventType } from "@/prisma/query/event.query";
+import { EventType } from "@/lib/queries/event.query";
+import { formatDate } from "@/lib/utils/date";
+import { cn } from "@/lib/utils/utils";
 import Link from "next/link";
 
 export const EventContent = ({

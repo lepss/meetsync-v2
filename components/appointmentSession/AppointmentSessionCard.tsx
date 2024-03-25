@@ -1,4 +1,4 @@
-import { AppointmentSessionCardType } from "@/prisma/query/appointmentSession.query";
+import { AppointmentSessionCardType } from "@/lib/queries/appointmentSession.query";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../ui/button";

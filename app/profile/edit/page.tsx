@@ -1,6 +1,6 @@
 import { ProfileForm } from "@/components/user/profile/ProfileForm";
-import { getUserEdit } from "@/prisma/query/user.query";
-import { editProfile } from "./edit-profile.action";
+import { getUserEdit } from "@/lib/queries/user.query";
+import { editProfile } from "../../../lib/actions/edit-profile.action";
 
 export default async function EditProfilePage() {
   const user = await getUserEdit();

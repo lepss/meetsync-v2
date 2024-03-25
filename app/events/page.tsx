@@ -1,6 +1,6 @@
 import { EventCard } from "@/components/event/EventCard";
 import { getAuthSession } from "@/lib/auth";
-import { getAllEvents } from "@/prisma/query/event.query";
+import { getAllEvents } from "@/lib/queries/event.query";
 
 export default async function Events() {
   const session = await getAuthSession();

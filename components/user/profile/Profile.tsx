@@ -1,5 +1,5 @@
-import { removeHttp } from "@/lib/removeHttp";
-import { UserProfile } from "@/prisma/query/user.query";
+import { UserProfile } from "@/lib/queries/user.query";
+import { removeHttp } from "@/lib/utils/removeHttp";
 import Link from "next/link";
 import { PropsWithChildren } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../../ui/avatar";

@@ -15,11 +15,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { formatDate } from "@/lib/date";
-import { cn } from "@/lib/utils";
+import { formatDate } from "@/lib/utils/date";
+import { cn } from "@/lib/utils/utils";
 import Link from "next/link";
 
-import { AppointmentSessionType } from "@/prisma/query/appointmentSession.query";
+import { AppointmentSessionType } from "@/lib/queries/appointmentSession.query";
 
 export const AppointmentSessionContent = ({
   className,

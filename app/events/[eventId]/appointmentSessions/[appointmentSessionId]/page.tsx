@@ -1,6 +1,6 @@
 import { AppointmentSessionContent } from "@/components/appointmentSession/AppointmentSessionContent";
 import { AppointmentSessionHeader } from "@/components/appointmentSession/AppointmentSessionHeader";
-import { getAppointmentSessionById } from "@/prisma/query/appointmentSession.query";
+import { getAppointmentSessionById } from "@/lib/queries/appointmentSession.query";
 import { notFound } from "next/navigation";
 
 export default async function page({

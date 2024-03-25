@@ -1,7 +1,7 @@
 import { buttonVariants } from "@/components/ui/button";
 import { Profile } from "@/components/user/profile/Profile";
 import { getAuthSession } from "@/lib/auth";
-import { getUserProfile } from "@/prisma/query/user.query";
+import { getUserProfile } from "@/lib/queries/user.query";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 

@@ -1,5 +1,5 @@
 import { AppointmentSessionForm } from "@/components/appointmentSession/AppointmentSessionForm";
-import { createAppointmentSession } from "./create-session.action";
+import { createAppointmentSession } from "../../../../../lib/actions/create-session.action";
 
 export default async function AddAppointmentSessionPage({
   params,

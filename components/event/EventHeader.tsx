@@ -1,4 +1,4 @@
-import { formatDate } from "@/lib/date";
+import { formatDate } from "@/lib/utils/date";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../ui/button";

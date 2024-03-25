@@ -1,6 +1,6 @@
 import { AppointmentSessionCard } from "@/components/appointmentSession/AppointmentSessionCard";
 import { getAuthSession } from "@/lib/auth";
-import { getAllAppointmentSessionsByEventId } from "@/prisma/query/appointmentSession.query";
+import { getAllAppointmentSessionsByEventId } from "@/lib/queries/appointmentSession.query";
 
 type PageParams = {
   params: {

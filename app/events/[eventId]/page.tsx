@@ -1,6 +1,6 @@
 import { EventContent } from "@/components/event/EventContent";
 import { EventHeader } from "@/components/event/EventHeader";
-import { getEventById } from "@/prisma/query/event.query";
+import { getEventById } from "@/lib/queries/event.query";
 import { notFound } from "next/navigation";
 
 export default async function EventPage({

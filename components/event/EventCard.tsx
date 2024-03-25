@@ -1,5 +1,5 @@
-import { formatDate } from "@/lib/date";
-import { EventCardType } from "@/prisma/query/event.query";
+import { EventCardType } from "@/lib/queries/event.query";
+import { formatDate } from "@/lib/utils/date";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../ui/button";

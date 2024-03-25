@@ -26,13 +26,13 @@ export default async function RootLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
       <body
-        className={clsx(inter.className, "bg-background h-full")}
+        className={clsx(inter.className, "h-full bg-background")}
         suppressHydrationWarning
       >
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-          <div className="flex flex-col h-full">
+          <div className="flex h-full flex-col">
             <Header />
-            <div className="container m-auto py-14 w-full">{children}</div>
+            <div className="container m-auto w-full py-14">{children}</div>
           </div>
         </ThemeProvider>
       </body>
