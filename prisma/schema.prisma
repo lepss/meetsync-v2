@@ -90,6 +90,7 @@ model Event {
   user                  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   eventDays             EventDay[]
   appointmentSessions   AppointmentSession[]
+  tags                  TagRelation[]
 }
 
 model EventDay {
@@ -136,4 +137,18 @@ model Appointment {
   appointmentSessionId  String
   appointmentRequest    AppointmentRequest @relation(fields: [appointmentRequestId], references: [id])
   appointmentSession    AppointmentSession @relation(fields: [appointmentSessionId], references: [id])
+}
+
+model Tag {
+  id          String    @id @default(cuid())
+  name        String
+  tagRelation TagRelation[]
+}
+
+model TagRelation{
+  id          String    @id @default(cuid())
+  tagId       String
+  eventId     String
+  tag         Tag @relation(fields: [tagId], references: [id])
+  event       Event @relation(fields: [eventId], references: [id])
 }

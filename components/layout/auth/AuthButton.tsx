@@ -16,9 +16,9 @@ export const LoginButton = () => {
       }}
     >
       {isPending ? (
-        <Loader className="mr-3 h-4 w-4" />
+        <Loader className="mr-3 size-4" />
       ) : (
-        <LogIn className="mr-2 h-4 w-4" />
+        <LogIn className="mr-2 size-4" />
       )}
       Login
     </Button>
@@ -34,9 +34,9 @@ export const LogoutDropdownMenuItem = () => {
       }}
     >
       {isPending ? (
-        <Loader className="mr-3 h-4 w-4" />
+        <Loader className="mr-3 size-4" />
       ) : (
-        <LogOut className="mr-2 h-4 w-4" />
+        <LogOut className="mr-2 size-4" />
       )}
       Logout
     </DropdownMenuItem>

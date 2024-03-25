@@ -3,6 +3,31 @@ import { Prisma, PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+const tagsName = [
+  { name: "tech" },
+  { name: "business" },
+  { name: "marketing" },
+  { name: "design" },
+  { name: "development" },
+  { name: "programming" },
+  { name: "jobs" },
+  { name: "education" },
+  { name: "travel" },
+  { name: "health" },
+  { name: "economic" },
+  { name: "politics" },
+  { name: "sports" },
+  { name: "entertainment" },
+  { name: "science" },
+  { name: "culture" },
+  { name: "lifestyle" },
+  { name: "food" },
+  { name: "fashion" },
+  { name: "music" },
+  { name: "art" },
+  { name: "film" },
+];
+
 const main = async () => {
   const users = [];
   for (let i = 0; i < 50; i++) {
@@ -15,7 +40,7 @@ const main = async () => {
       name: name,
       firstname: firstname,
       lastname: lastname,
-      email: `${firstname[0].toLowerCase()}.${lastname.toLowerCase()}@gmail.com`,
+      email: `${firstname[0].toLowerCase()}.${lastname.toLowerCase()}${randomNumber}@gmail.com`,
       image: faker.image.avatar(),
       username: username.toLowerCase(),
       bio: faker.lorem.sentence(),
@@ -36,6 +61,16 @@ const main = async () => {
     } satisfies Prisma.CompanyUncheckedCreateInput;
     const dbCompany = await prisma.company.create({ data: company });
     companies.push(company);
+  }
+
+  const tags = [];
+  for (let i = 0; i < tagsName.length; i++) {
+    const tag = {
+      name: tagsName[i].name,
+    } satisfies Prisma.TagUncheckedCreateInput;
+
+    const dbTag = await prisma.tag.create({ data: tag });
+    tags.push(dbTag);
   }
 
   const events = [];
@@ -59,6 +94,23 @@ const main = async () => {
 
     const dbEvent = await prisma.event.create({ data: event });
     events.push(dbEvent);
+
+    const numberOfTags = faker.number.int({ min: 1, max: 4 });
+    const selectedTagsIndexes = [numberOfTags];
+    while (selectedTagsIndexes.length < numberOfTags) {
+      const randomIndex = faker.number.int({ min: 0, max: tags.length - 1 });
+      selectedTagsIndexes.push(randomIndex);
+    }
+
+    for (let i = 0; i < selectedTagsIndexes.length; i++) {
+      const index = selectedTagsIndexes[i];
+      await prisma.tagRelation.create({
+        data: {
+          tagId: tags[index].id,
+          eventId: dbEvent.id,
+        },
+      });
+    }
 
     const eventDates = [];
     const randomDateNumber = faker.number.int({ min: 1, max: 3 });

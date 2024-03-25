@@ -1,3 +1,6 @@
+import { HeroSection } from "@/components/home/HeroSection";
+import { LatestEvent } from "@/components/home/LatestEvent";
+
 export default async function Home({
   params: { locale },
 }: {
@@ -5,7 +8,10 @@ export default async function Home({
 }) {
   return (
     <main>
-      <h1>Home</h1>
+      <div className="mt-6 block gap-4 lg:flex">
+        <HeroSection />
+        <LatestEvent />
+      </div>
     </main>
   );
 }
