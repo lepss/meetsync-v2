@@ -32,7 +32,7 @@ export default async function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <div className="flex h-full flex-col">
             <Header />
-            <div className="container m-auto w-full py-14">{children}</div>
+            <div className="m-auto w-full">{children}</div>
           </div>
         </ThemeProvider>
       </body>

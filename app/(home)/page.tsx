@@ -8,7 +8,7 @@ export default async function Home({
 }) {
   return (
     <main>
-      <div className="mt-6 block gap-4 lg:flex">
+      <div className="mt-6 block gap-4 p-14 lg:flex">
         <HeroSection />
         <LatestEvent />
       </div>

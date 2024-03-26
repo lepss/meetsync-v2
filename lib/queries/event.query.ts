@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
+import { unstable_noStore as noStore } from "next/cache";
 
 export const eventCardQuery = () =>
   ({
@@ -21,6 +22,15 @@ export const eventCardQuery = () =>
         id: true,
         start_time: true,
         end_time: true,
+      },
+    },
+    tags: {
+      select: {
+        tag: {
+          select: {
+            name: true,
+          },
+        },
       },
     },
     _count: {
@@ -109,6 +119,121 @@ export const getAllEvents = async () =>
   prisma.event.findMany({
     select: eventCardQuery(),
   });
+
+const ITEMS_PER_PAGE = 8;
+export const getFilteredEvents = async (
+  query: string,
+  tag: string,
+  currentPage: number
+) => {
+  noStore();
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+  const tagsArray = tag.split(" ");
+  return prisma.event.findMany({
+    select: eventCardQuery(),
+    where: {
+      OR: [
+        {
+          name: {
+            contains: query,
+          },
+        },
+        {
+          description: {
+            contains: query,
+          },
+        },
+        {
+          location: {
+            contains: query,
+          },
+        },
+        {
+          tags: {
+            some: {
+              tag: {
+                name: {
+                  in: tagsArray,
+                },
+              },
+            },
+          },
+        },
+      ],
+      tags: tag
+        ? {
+            some: {
+              tag: {
+                name: {
+                  in: tagsArray,
+                },
+              },
+            },
+          }
+        : undefined,
+    },
+    orderBy: {
+      created_at: "desc",
+    },
+    skip: offset,
+    take: ITEMS_PER_PAGE,
+  });
+};
+
+export const getEventsPages = async (query: string, tag: string) => {
+  noStore();
+  const tagsArray = tag.split(" ");
+  try {
+    const totalEvents = await prisma.event.count({
+      where: {
+        OR: [
+          {
+            name: {
+              contains: query,
+            },
+          },
+          {
+            description: {
+              contains: query,
+            },
+          },
+          {
+            location: {
+              contains: query,
+            },
+          },
+          {
+            tags: {
+              some: {
+                tag: {
+                  name: {
+                    in: tagsArray,
+                  },
+                },
+              },
+            },
+          },
+        ],
+        tags: tag
+          ? {
+              some: {
+                tag: {
+                  name: {
+                    in: tagsArray,
+                  },
+                },
+              },
+            }
+          : undefined,
+      },
+    });
+
+    return Math.ceil(totalEvents / ITEMS_PER_PAGE);
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch total number of events.");
+  }
+};
 
 export const getEventCount = async () => prisma.event.count();
 
