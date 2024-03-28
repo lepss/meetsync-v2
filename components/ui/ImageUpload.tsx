@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
 export type ImageUploadProps = {
-  onFormDataReady: (formData: FormData | null) => void;
+  onFormDataReady: (file: File | null) => void;
 };
 
 export const ImageUpload: React.FC<ImageUploadProps> = ({
@@ -12,11 +12,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
   const [file, setFile] = useState<File | null>(null);
   useEffect(() => {
     if (file) {
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("upload_preset", "vp7zprgo");
-
-      onFormDataReady(formData);
+      onFormDataReady(file);
     } else {
       onFormDataReady(null);
     }
@@ -44,7 +40,11 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
             "w-full p-4 h-32 border-4 border-dashed border-muted-input rounded-lg  bg-muted flex justify-center items-center",
         })}
       >
-        <input {...getInputProps({})} />
+        <input
+          name="image"
+          aria-describedby="image-error"
+          {...getInputProps({})}
+        />
         <p className="text-center text-sm text-muted-foreground">
           Drag &apos;n&apos; drop image here, or click to select image
         </p>

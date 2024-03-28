@@ -1,22 +1,16 @@
 "use client";
 
-import { createAppointmentSession } from "@/lib/actions/create-session.action";
+import { createEvent } from "@/lib/actions/create-event.action";
 import Link from "next/link";
 import { FormEvent, useCallback, useState } from "react";
 import { useFormState } from "react-dom";
 import { ImageUpload } from "../ui/ImageUpload";
 import { Button } from "../ui/button";
 
-export const AppointmentSessionForm = ({ eventId }: { eventId: string }) => {
+export const EventForm = ({ eventId }: { eventId: string }) => {
   const initialState = { message: "", errors: {} };
-  const createAppointmentSessionWithId = createAppointmentSession.bind(
-    null,
-    eventId
-  );
-  const [state, dispatch] = useFormState(
-    createAppointmentSessionWithId,
-    initialState
-  );
+  const [state, dispatch] = useFormState(createEvent, initialState);
+
   const [imageFile, setImageFile] = useState<File | null>(null);
 
   const handleFormDataReady = useCallback((file: File | null) => {
@@ -49,7 +43,7 @@ export const AppointmentSessionForm = ({ eventId }: { eventId: string }) => {
               name="name"
               type="text"
               className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
-              placeholder="Enter appointment session title"
+              placeholder="Enter event title"
               aria-describedby="name-error"
             />
             {/* <User className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" /> */}
@@ -78,13 +72,102 @@ export const AppointmentSessionForm = ({ eventId }: { eventId: string }) => {
               className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
               rows={6}
               aria-describedby="description-error"
-              placeholder="Enter appointment session description"
+              placeholder="Enter event description"
             ></textarea>
             {/* <User className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" /> */}
           </div>
           <div id="description-error" aria-live="polite" aria-atomic="true">
             {state.errors?.description &&
               state.errors.description.map((error: string) => (
+                <p className="mt-2 text-sm text-red-500" key={error}>
+                  {error}
+                </p>
+              ))}
+          </div>
+        </div>
+        {/* LOCATION FIELD */}
+        <div className="mb-4">
+          <label htmlFor="location" className="mb-2 block text-sm font-medium">
+            Location
+          </label>
+          <div className="relative">
+            <input
+              id="location"
+              name="location"
+              type="text"
+              className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
+              placeholder="Enter event location"
+              aria-describedby="location-error"
+            />
+            {/* <User className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" /> */}
+          </div>
+          <div id="location-error" aria-live="polite" aria-atomic="true">
+            {state.errors?.location &&
+              state.errors.location.map((error: string) => (
+                <p className="mt-2 text-sm text-red-500" key={error}>
+                  {error}
+                </p>
+              ))}
+          </div>
+        </div>
+        {/* APPOINTMENT DURATION FIELD */}
+        <div className="mb-4">
+          <label
+            htmlFor="appointment_duration"
+            className="mb-2 block text-sm font-medium"
+          >
+            Appointment Duration
+          </label>
+          <div className="relative">
+            <input
+              id="appointment_duration"
+              name="appointment_duration"
+              type="number"
+              className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
+              placeholder="Enter appointment duration"
+              aria-describedby="appointment_duration-error"
+              step={5}
+              min={0}
+            />
+            {/* <User className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" /> */}
+          </div>
+          <div
+            id="appointment_duration-error"
+            aria-live="polite"
+            aria-atomic="true"
+          >
+            {state.errors?.appointment_duration &&
+              state.errors.appointment_duration.map((error: string) => (
+                <p className="mt-2 text-sm text-red-500" key={error}>
+                  {error}
+                </p>
+              ))}
+          </div>
+        </div>
+        {/* BREAK DURATION FIELD */}
+        <div className="mb-4">
+          <label
+            htmlFor="break_duration"
+            className="mb-2 block text-sm font-medium"
+          >
+            Break Duration
+          </label>
+          <div className="relative">
+            <input
+              id="break_duration"
+              name="break_duration"
+              type="number"
+              className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
+              placeholder="Enter break duration"
+              aria-describedby="break_duration-error"
+              step={5}
+              min={0}
+            />
+            {/* <User className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" /> */}
+          </div>
+          <div id="break_duration-error" aria-live="polite" aria-atomic="true">
+            {state.errors?.break_duration &&
+              state.errors.break_duration.map((error: string) => (
                 <p className="mt-2 text-sm text-red-500" key={error}>
                   {error}
                 </p>
@@ -117,12 +200,12 @@ export const AppointmentSessionForm = ({ eventId }: { eventId: string }) => {
       </div>
       <div className="mt-6 flex justify-end gap-4">
         <Link
-          href={`/events/${eventId}`}
+          href="/events"
           className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
         >
           Cancel
         </Link>
-        <Button type="submit">Create Appointment Session</Button>
+        <Button type="submit">Create Event</Button>
       </div>
     </form>
   );

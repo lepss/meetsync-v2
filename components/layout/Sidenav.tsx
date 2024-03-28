@@ -1,6 +1,8 @@
 import { getTags } from "@/lib/queries/tag.query";
+import Link from "next/link";
 import { Search } from "../event/Search";
 import { SearchTag } from "../event/SearchTag";
+import { Button } from "../ui/button";
 
 export default async function SideNav() {
   const tags = await getTags();
@@ -14,6 +16,9 @@ export default async function SideNav() {
             <SearchTag tags={tags} />
           </div>
         </div>
+        <Link className="w-full" href={`/events/create`}>
+          <Button className="mt-4 w-full px-4 py-2">Create an Event</Button>
+        </Link>
         {/* <NavLinks /> */}
         {/* <div className="hidden h-auto w-full grow rounded-md bg-gray-50 md:block"></div> */}
       </div>
