@@ -44,8 +44,8 @@ export const EventForm = ({ tagList }: { tagList: Tags }) => {
       "dates",
       dates?.map((d) => d.toISOString()).join(",") || ""
     );
-    console.log(Object.fromEntries(formData.entries()));
-    // dispatch(formData);
+    // console.log(Object.fromEntries(formData.entries()));
+    dispatch(formData);
   };
 
   return (
