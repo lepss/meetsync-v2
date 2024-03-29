@@ -80,7 +80,7 @@ export async function createEvent(prevState: State, formData: FormData) {
   }
 
   try {
-    await prisma.event.create({
+    const dbEvent = await prisma.event.create({
       data: {
         ...validatedFields.data,
         image: imageUrl,

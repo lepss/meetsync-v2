@@ -1,21 +1,34 @@
 "use client";
 
 import { createEvent } from "@/lib/actions/create-event.action";
+import { Tags } from "@/lib/queries/tag.query";
 import Link from "next/link";
 import { FormEvent, useCallback, useState } from "react";
 import { useFormState } from "react-dom";
 import { ImageUpload } from "../ui/ImageUpload";
 import { Button } from "../ui/button";
+import { DatePickerWithRange } from "./DateRangePicker";
+import { TagPicker } from "./TagPicker";
 
-export const EventForm = ({ eventId }: { eventId: string }) => {
+export const EventForm = ({ tagList }: { tagList: Tags }) => {
   const initialState = { message: "", errors: {} };
   const [state, dispatch] = useFormState(createEvent, initialState);
 
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [selectedTags, setSelectedTags] = useState<String[]>([]);
+  const [dates, setDates] = useState<Date[] | undefined>();
 
   const handleFormDataReady = useCallback((file: File | null) => {
     setImageFile(file);
   }, []);
+
+  const handleSelectedTagsChange = (newSelectedTags: String[]) => {
+    setSelectedTags(newSelectedTags);
+  };
+
+  const handleSelectedDateChange = (newDate: Date[] | undefined) => {
+    setDates(newDate);
+  };
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -25,8 +38,14 @@ export const EventForm = ({ eventId }: { eventId: string }) => {
       formData.delete("image");
       formData.append("image", imageFile);
     }
-    // console.log(Object.fromEntries(formData.entries()));
-    dispatch(formData);
+
+    formData.append("tags", selectedTags.join(","));
+    formData.append(
+      "dates",
+      dates?.map((d) => d.toISOString()).join(",") || ""
+    );
+    console.log(Object.fromEntries(formData.entries()));
+    // dispatch(formData);
   };
 
   return (
@@ -110,68 +129,99 @@ export const EventForm = ({ eventId }: { eventId: string }) => {
               ))}
           </div>
         </div>
-        {/* APPOINTMENT DURATION FIELD */}
+        {/* DATE FIELD */}
         <div className="mb-4">
-          <label
-            htmlFor="appointment_duration"
-            className="mb-2 block text-sm font-medium"
-          >
-            Appointment Duration
+          <label htmlFor="date" className="mb-2 block text-sm font-medium">
+            Date
           </label>
           <div className="relative">
-            <input
-              id="appointment_duration"
-              name="appointment_duration"
-              type="number"
-              className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
-              placeholder="Enter appointment duration"
-              aria-describedby="appointment_duration-error"
-              step={5}
-              min={0}
+            <DatePickerWithRange
+              onSelectedDateChange={handleSelectedDateChange}
             />
-            {/* <User className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" /> */}
-          </div>
-          <div
-            id="appointment_duration-error"
-            aria-live="polite"
-            aria-atomic="true"
-          >
-            {state.errors?.appointment_duration &&
-              state.errors.appointment_duration.map((error: string) => (
-                <p className="mt-2 text-sm text-red-500" key={error}>
-                  {error}
-                </p>
-              ))}
           </div>
         </div>
-        {/* BREAK DURATION FIELD */}
+        {/* APPOINTMENT DURATION FIELD */}
         <div className="mb-4">
-          <label
-            htmlFor="break_duration"
-            className="mb-2 block text-sm font-medium"
-          >
-            Break Duration
+          <div className="block justify-between gap-4 lg:flex">
+            <div className="w-full">
+              <label
+                htmlFor="appointment_duration"
+                className="mb-2 block text-sm font-medium"
+              >
+                Appointment Duration
+              </label>
+              <div className="relative">
+                <input
+                  id="appointment_duration"
+                  name="appointment_duration"
+                  type="number"
+                  className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
+                  placeholder="Enter appointment duration"
+                  aria-describedby="appointment_duration-error"
+                  step={5}
+                  min={0}
+                />
+                {/* <User className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" /> */}
+              </div>
+              <div
+                id="appointment_duration-error"
+                aria-live="polite"
+                aria-atomic="true"
+              >
+                {state.errors?.appointment_duration &&
+                  state.errors.appointment_duration.map((error: string) => (
+                    <p className="mt-2 text-sm text-red-500" key={error}>
+                      {error}
+                    </p>
+                  ))}
+              </div>
+            </div>
+            {/* BREAK DURATION FIELD */}
+            <div className="mt-4 w-full lg:mb-4 lg:mt-0">
+              <label
+                htmlFor="break_duration"
+                className="mb-2 block text-sm font-medium"
+              >
+                Break Duration
+              </label>
+              <div className="relative">
+                <input
+                  id="break_duration"
+                  name="break_duration"
+                  type="number"
+                  className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
+                  placeholder="Enter break duration"
+                  aria-describedby="break_duration-error"
+                  step={5}
+                  min={0}
+                />
+                {/* <User className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" /> */}
+              </div>
+              <div
+                id="break_duration-error"
+                aria-live="polite"
+                aria-atomic="true"
+              >
+                {state.errors?.break_duration &&
+                  state.errors.break_duration.map((error: string) => (
+                    <p className="mt-2 text-sm text-red-500" key={error}>
+                      {error}
+                    </p>
+                  ))}
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* TAGS FIELD */}
+        <div className="mb-4">
+          <label htmlFor="tag" className="mb-2 block text-sm font-medium">
+            Tags
           </label>
           <div className="relative">
-            <input
-              id="break_duration"
-              name="break_duration"
-              type="number"
-              className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
-              placeholder="Enter break duration"
-              aria-describedby="break_duration-error"
-              step={5}
-              min={0}
+            <TagPicker
+              tagList={tagList}
+              onSelectedTagsChange={handleSelectedTagsChange}
             />
-            {/* <User className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" /> */}
-          </div>
-          <div id="break_duration-error" aria-live="polite" aria-atomic="true">
-            {state.errors?.break_duration &&
-              state.errors.break_duration.map((error: string) => (
-                <p className="mt-2 text-sm text-red-500" key={error}>
-                  {error}
-                </p>
-              ))}
           </div>
         </div>
         {/* IMAGE FIELD */}
