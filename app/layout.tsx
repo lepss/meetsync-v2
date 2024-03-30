@@ -16,13 +16,17 @@ export function generateStaticParams() {
   return [{ locale: "en" }, { locale: "fr" }];
 }
 
+type RootLayoutProps = {
+  children: React.ReactNode;
+  params: { locale: string };
+  modal: React.ReactNode;
+};
+
 export default async function RootLayout({
   children,
   params: { locale },
-}: Readonly<{
-  children: React.ReactNode;
-  params: { locale: string };
-}>) {
+  modal,
+}: Readonly<RootLayoutProps>) {
   return (
     <html lang={locale} suppressHydrationWarning>
       <body
@@ -34,6 +38,7 @@ export default async function RootLayout({
             <Header />
             <div className="m-auto w-full">{children}</div>
           </div>
+          {modal}
         </ThemeProvider>
       </body>
     </html>

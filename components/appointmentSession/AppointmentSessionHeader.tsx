@@ -42,7 +42,7 @@ export const AppointmentSessionHeader = ({
           <p className="mt-1 text-lg text-muted-foreground">{location}</p>
         </div>
         <div className="flex gap-2">
-          <Link className="w-full" href={`${id}/appointmentRequest/add`}>
+          <Link className="w-full" href={`${id}/appointmentRequest/create`}>
             <Button className="mt-4 w-full px-4 py-2">Apply</Button>
           </Link>
         </div>
