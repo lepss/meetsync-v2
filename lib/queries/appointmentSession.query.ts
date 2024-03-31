@@ -129,6 +129,14 @@ export const getAppointmentSessionCountByEventId = async (eventId: string) =>
     where: { eventId },
   });
 
+export const getSessionEventIdBySessionId = async (id: string) =>
+  prisma.appointmentSession.findUnique({
+    where: { id },
+    select: {
+      eventId: true,
+    },
+  });
+
 export type AppointmentSessionCardType = Prisma.PromiseReturnType<
   typeof getAllAppointmentSessionsByEventId
 >[number];

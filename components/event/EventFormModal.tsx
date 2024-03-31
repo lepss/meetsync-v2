@@ -12,7 +12,8 @@ export const EventFormModal = ({ tagList }: { tagList: Tags }) => {
 
   return (
     <Dialog
-      open={pathname?.includes("events/create")}
+      // open={pathname?.includes("events/create")}
+      open={true}
       onOpenChange={() => {
         router.back();
       }}
